@@ -1,13 +1,13 @@
 import logo from './logo.svg';
 import './App.css';
 import Button from '@material-ui/core/Button';
-import { useSnackbar } from 'notistack';
+import { useSimpleSnackbar } from './Components/SimpleSnackbar';
 
 function App () {
-  const { enqueueSnackbar } = useSnackbar();
+  const showSnackbar = useSimpleSnackbar();
   const handleClick = event => {
     event.preventDefault();
-    enqueueSnackbar("This is a message",{variant:"success"});
+    showSnackbar("Success");
   };
 
   return (

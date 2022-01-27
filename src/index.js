@@ -2,13 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import { SnackbarProvider } from 'notistack'
-
+import NotistackWrapper from './Components/NotistackWrapper'
 
 ReactDOM.render(
-    <SnackbarProvider>
+    <NotistackWrapper>
         <App />
-    </SnackbarProvider>
+    </NotistackWrapper>
     ,
   document.getElementById('root')
 );
