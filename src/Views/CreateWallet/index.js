@@ -116,3 +116,5 @@ function CreateWallet () {
     </div>
   )
 }
+
+export default CreateWallet;

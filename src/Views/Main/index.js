@@ -4,6 +4,7 @@ import {makeStyles} from '@material-ui/core/styles';
 import WalletBar from '../../Components/WalletBar';
 import Paper from '@material-ui/core/Paper';
 import { isMobile } from 'react-device-detect';
+import CreateWallet from '../CreateWallet';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -22,7 +23,8 @@ export default function Main() {
                     height: 600,
                     mixHeight: 600
                 }}>
-                <WalletBar/>
+                <WalletBar />
+                <CreateWallet />
             </Paper>
         </Grid>
     </div>)
