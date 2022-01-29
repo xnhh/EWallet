@@ -1,5 +1,5 @@
 import { makeStyles, withStyles, createMuiTheme } from "@material-ui/core/styles";
-import { IconButton } from "@material-ui/core/IconButton";
+import IconButton from "@material-ui/core/IconButton";
 import DownIcon from '@material-ui/icons/KeyboardArrowDown';
 import CircleIcon from '@material-ui/icons/FiberManualRecord';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -11,6 +11,7 @@ import { ThemeProvider } from '@material-ui/styles';
 import Menu from '@material-ui/core/Menu';
 import { NET_WORKS, NET_WORKS_NAME } from "../../Constants"
 import { isMobile } from 'react-device-detect';
+import { useUpdateNetwork } from '../../Contexts/Network'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -26,11 +27,11 @@ const useStyles = makeStyles(theme => ({
       borderColor: "black"
   },
   btnContext:{
-     marginTop: theme.spacing(-0.7),
+     marginTop: theme.spacing(0.4),
   },
   btnText:{
       position:'relative',
-      top:theme.spacing(-1),
+      top:theme.spacing(-0.8),
   },
 }));
 
@@ -85,6 +86,7 @@ function MenuBtn () {
   const anchorRef = useRef(null);
   const prevOpen = useRef(open);
   const [selectedIndex, setSelectedIndex] = useState(1);
+  const updateNetwork = useUpdateNetwork();
   const handleToggle = () => {
     setOpen(prevOpen => !prevOpen);
   };
@@ -107,7 +109,9 @@ function MenuBtn () {
     if (selectedIndex === key) {
       return;
     }
-    selectedIndex(key)
+    setSelectedIndex(key);
+    setOpen(false);
+    updateNetwork(NET_WORKS[key]);
    }
 
   const showOneItem = (net, key) => {
