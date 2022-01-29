@@ -4,7 +4,7 @@ import { useSnackbar } from "notistack";
 const SnackbarContext = createContext();
 
 export function useSimpleSnackbar(){ 
-  return useContext(SnackbarContext)
+  return useContext(SnackbarContext);
 }
 
 const VARIANTS = [
