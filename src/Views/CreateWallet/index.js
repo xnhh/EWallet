@@ -84,27 +84,27 @@ function CreateWallet () {
       <form className={classes.form} onSubmit={onSubmit}>
         <FormControl margin="normal"  fullWidth>
           <TextField id="standard-password-input"
-              label="设置密码"
-              required
-              type="password"
-              autoComplete="current-password"
-              value={password}
-              onChange={updatePassword}/>
+            label="设置密码"
+            required
+            type="password"
+            autoComplete="current-password"
+            value={password}
+            onChange={updatePassword}/>
         </FormControl>
         <FormControl margin="normal"  fullWidth>
           <TextField id="confirm-password-input"
-              label="再次输入密码"
-              required
-              type="password"
-              autoComplete="current-password"
-              value={confirmPassword}
-              onChange={updateConfirmPassword}/>
+            label="再次输入密码"
+            required
+            type="password"
+            autoComplete="current-password"
+            value={confirmPassword}
+            onChange={updateConfirmPassword}/>
         </FormControl>
         <Button type='submit' variant="contained" color="primary" className={classes.submit}>
           创建
         </Button>
       </form>
-      <Link href="_blank" className={classes.import}>导入已有账号</Link>
+      <Link href="/import" className={classes.import}>导入已有账号</Link>
         <div className={classes.wallet}>
             <Typography color='secondary'>
                 KHWallet，简单安全易用的
