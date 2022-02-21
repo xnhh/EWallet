@@ -3,14 +3,17 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import Main from './Views/Main';
 import NotistackWrapper from './Components/NotistackWrapper'
-import NetworkProvider from './Contexts/Network'
+import GlobalProvider from './Contexts'
+import StorageProvider from './Contexts'
 
 function AllProvider () {
   return (
     <NotistackWrapper>
-      <NetworkProvider>
-        <Main />
-      </NetworkProvider>
+      <GlobalProvider>
+        <StorageProvider>
+          <Main />
+        </StorageProvider>
+      </GlobalProvider>
     </NotistackWrapper>
   );
 }
