@@ -11,7 +11,7 @@ import { ThemeProvider } from '@material-ui/styles';
 import Menu from '@material-ui/core/Menu';
 import { NET_WORKS, NET_WORKS_NAME } from "../../Constants"
 import { isMobile } from 'react-device-detect';
-import { useUpdateNetwork } from '../../Contexts/Network'
+import { useUpdateGlobal } from '../../Contexts/GlobalProvider';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -86,7 +86,7 @@ function MenuBtn () {
   const anchorRef = useRef(null);
   const prevOpen = useRef(open);
   const [selectedIndex, setSelectedIndex] = useState(1);
-  const updateNetwork = useUpdateNetwork();
+  const updateNetwork = useUpdateGlobal();
   const handleToggle = () => {
     setOpen(prevOpen => !prevOpen);
   };
@@ -111,7 +111,9 @@ function MenuBtn () {
     }
     setSelectedIndex(key);
     setOpen(false);
-    updateNetwork(NET_WORKS[key]);
+    updateNetwork({
+     network: NET_WORKS[key]
+    });
    }
 
   const showOneItem = (net, key) => {

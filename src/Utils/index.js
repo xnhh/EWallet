@@ -1,4 +1,4 @@
-import crypto from 'crypto'
+import crypto from 'crypto-browserify'
 
 export function aesEncrypt (data, key) {
   let cipher = crypto.createCipher('aes192', key);

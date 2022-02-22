@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import Main from './Views/Main';
 import NotistackWrapper from './Components/NotistackWrapper'
-import GlobalProvider from './Contexts'
-import StorageProvider from './Contexts'
+import GlobalProvider from './Contexts/GlobalProvider'
+import StorageProvider from './Contexts/StorageProvider'
 
 function AllProvider () {
   return (

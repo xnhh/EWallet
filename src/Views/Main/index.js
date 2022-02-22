@@ -5,9 +5,7 @@ import WalletBar from '../../Components/WalletBar';
 import Paper from '@material-ui/core/Paper';
 import { isMobile } from 'react-device-detect';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-
-const ImportWallet = lazy(() => import('../ImportWallet'));
-const CreateWallet = lazy(() => import('../CreateWallet'));
+import Routes from '../../Routes';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -16,17 +14,6 @@ const useStyles = makeStyles(theme => ({
         justifyContent: "center"
     }
 }));
-
-function SwitchPage () {
-    return (
-        <Suspense fallback='loading'>
-            <Switch>
-                <Route path="/import" component={ImportWallet} />
-                <Route path="/" component={CreateWallet} />
-            </Switch>
-        </Suspense>
-    )
-}
 
 export default function Main() {
   const classes = useStyles();
@@ -40,7 +27,9 @@ export default function Main() {
                 }}>
                 <Router>
                     <WalletBar />
-                    <SwitchPage />
+                    <Switch>
+                        <Route path="/" component={Routes} />
+                    </Switch>  
                 </Router>
                 </Paper>
             </Grid>
