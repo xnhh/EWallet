@@ -8,6 +8,11 @@ import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
 import {useSimpleSnackbar} from '../../Components/SimpleSnackbar';
 import TextField from '@material-ui/core/TextField';
+import { ethers } from 'ethers';
+import { aesEncrypt } from '../../Utils';
+import { useUpdateCrypt } from '../../Contexts/StorageProvider';
+import { useUpdateGlobal } from '../../Contexts/GlobalProvider';
+import { withRouter } from 'react-router';
 
 
 const useStyles = makeStyles(theme => ({
@@ -47,11 +52,13 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function CreateWallet () { 
+function CreateWallet ({history}) { 
   const classes = useStyles();
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const showSnackbar = useSimpleSnackbar();
+  const updateCrypt = useUpdateCrypt();
+  const updateGlobal = useUpdateGlobal();
 
   const updatePassword = e => { 
     let _password = e.target.value;
@@ -70,6 +77,26 @@ function CreateWallet () {
     }
     if (password.length < 12) { 
       return showSnackbar("密码至少12位", "error");
+    }
+    let wallet = null;
+    try {
+      wallet = ethers.Wallet.createRandom();
+    } catch (err) {
+      showSnackbar("当前浏览器不支持创建随机钱包", 'error');
+    }
+    if (wallet) {
+      try {
+        let _crypt = aesEncrypt(wallet.privateKey, password);
+        updateCrypt(wallet.address, _crypt);
+        updateGlobal({
+          isLogin: true,
+          password,
+          wallet
+        });
+        history.push('/detail');
+      } catch (err) {
+        showSnackbar("写入存储出错", err);
+      }
     }
   }
 
@@ -117,4 +144,4 @@ function CreateWallet () {
   )
 }
 
-export default CreateWallet;
+export default withRouter(CreateWallet);

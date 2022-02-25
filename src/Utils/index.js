@@ -23,3 +23,7 @@ export function convertToEth (_bigNumber) {
   let eth_string = utils.formatEther(_bigNumber);
   return +eth_string; //turn string into number
 }
+
+export function safeAccess (object, path) {
+  return object ? path.reduce((currentObject, currentValue) => (currentObject && currentObject[currentValue] ? currentObject[currentValue] : null), object) : null;
+}
