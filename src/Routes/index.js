@@ -10,7 +10,9 @@ const SignIn = lazy(() => import('../Views/SignIn'));
 const WalletDetail = lazy(() => import('../Views/WalletDetail'));
 
 function SwitchRoute ({ history, path }) {
-  history.push(path);
+  setTimeout(() => {
+    history.push(path);
+  }, 0)
   return null;
 }
 
@@ -27,7 +29,7 @@ function AdminRoutes ({ history }) {
     <Suspense fallback = {null}>
       <Switch>
         <Route path="/import" component={ImportWallet} />
-        <Route parh="/create" >
+        <Route path="/create" >
           {hasAccount ? <SwitchRoute history={history} path='/sign' />:<CreateWallet />}
         </Route>
         <Route path='/sign' >
@@ -40,7 +42,6 @@ function AdminRoutes ({ history }) {
       </Switch>
     </Suspense>
   )
-
 }
 
 export default withRouter(AdminRoutes);

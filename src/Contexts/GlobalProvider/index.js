@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useReducer, useMemo, useCallback } from 'react'
+import { getInfuraProviderByNetwork } from '../../Utils';
 
 const UPDATE = 'UPDATE';
 
@@ -11,7 +12,8 @@ function useGlobalContext () {
 const global_init = {
   network: "homestead",
   isLogin: false,
-  wallet: null
+  wallet: null,
+  provider: getInfuraProviderByNetwork("mainnet")
 }
 
 function reducer(state, { type, payload }) {

@@ -1,3 +1,4 @@
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import DetailHeader from '../../Components/DetailHeader';
 import DetailBody from '../../Components/DetailBody';

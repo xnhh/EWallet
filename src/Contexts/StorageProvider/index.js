@@ -1,4 +1,4 @@
-import { createContext, useCallback, useContext, useState, useMemo, useEffect, useReducer } from "react";
+import { createContext, useCallback, useContext, useMemo, useEffect, useReducer } from "react";
 import { reactLocalStorage } from 'reactjs-localstorage';
 import { safeAccess } from "../../Utils";
 
@@ -49,7 +49,7 @@ export default function Provider ({ children }) {
 
   const initState = useCallback(payload => {
     dispatch({ type: INIT, payload });
-  })
+  }, []);
 
   return (
     <StorageContext.Provider value={useMemo(() => [state, { updateByAddress, initState }], [state, updateByAddress, initState])}>
@@ -75,6 +75,17 @@ export function useStorage () {
 //   const [, { update }] = useStorageContext();
 //   return update;
 // }
+
+export function useDefaultAccount () {
+  const [data,] = useStorageContext();
+  let keys = Object.keys(data);
+  return keys[0];
+}
+
+export function useAccountCrypt (address) {
+  const [data,] = useStorageContext();
+  return safeAccess(data, [address, 'crypt']);
+}
 
 export function useUpdateCrypt () {
   const [data, { updateByAddress }] = useStorageContext();

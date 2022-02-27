@@ -95,6 +95,7 @@ function CreateWallet ({history}) {
         });
         history.push('/detail');
       } catch (err) {
+        console.log(err);
         showSnackbar("写入存储出错", err);
       }
     }

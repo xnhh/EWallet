@@ -1,6 +1,6 @@
 import { Button, IconButton, ListItemText, Tooltip } from "@material-ui/core";
 import { Dehaze, MoreHoriz } from "@material-ui/icons";
-import { makeStyles } from "@mui/material"
+import { makeStyles } from "@material-ui/core/styles"
 import { useState } from "react";
 import { useGlobal } from "../../Contexts/GlobalProvider"
 import copy from 'copy-to-clipboard';

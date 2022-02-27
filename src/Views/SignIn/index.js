@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useSimpleSnackbar } from "../../Components/SimpleSnackbar";
-import { useStorage } from "../../Contexts/StorageProvider";
+import { useAccountCrypt, useDefaultAccount } from "../../Contexts/StorageProvider";
 import { useUpdateGlobal } from "../../Contexts/GlobalProvider"
 import { Avatar, makeStyles } from "@material-ui/core";
 import LockIcon from '@material-ui/icons/LockOutlined';
@@ -44,7 +44,9 @@ function SignIn ({ history }) {
   const classes = useStyles();
   const showSnackbar = useSimpleSnackbar();
   const [password, setPassword] = useState('');
-  const storage = useStorage();
+  // const storage = useStorage();
+  const address = useDefaultAccount();
+  const crypt = useAccountCrypt(address);
   const updateGlobal = useUpdateGlobal();
 
   const updatePassword = e => {
@@ -54,20 +56,17 @@ function SignIn ({ history }) {
   
   const onSubmit = e => {
     e.preventDefault();
-    if (storage && storage.length > 0) { 
-      let _crypt = storage[0].crypt;
-      try {
-        let privateKey = aesDecrypt(_crypt, password);
-        let wallet = new ethers.Wallet(privateKey);
-        let options = {
-          isLogin: true,
-          wallet,
-        };
-        updateGlobal(options);
-        history.push('/detail');
-      } catch (err) {
-        showSnackbar("密码错误", 'error');
-      }
+    try {
+      let privateKey = aesDecrypt(crypt, password);
+      let wallet = new ethers.Wallet(privateKey);
+      let options = {
+        isLogin: true,
+        wallet
+      };
+      updateGlobal(options);
+      history.push('/detail');
+    } catch (err) {
+      showSnackbar("密码错误", 'error');
     }
   }
 
@@ -83,14 +82,14 @@ function SignIn ({ history }) {
         以太坊钱包
       </Typography>
       <form className={classes.form} onSubmit={onSubmit}>
-        <FormControl margin="normal"  fullWidth>
+        <FormControl margin="normal" fullWidth>
           <TextField id="standard-password-input"
             label="密码"
             required
             type="password"
             autoComplete="current-password"
             value={password}
-            onChange={updatePassword}/>
+            onChange={updatePassword} />
         </FormControl>
         <Button type='submit' variant="contained" color="primary" className={classes.submit}>
           登录

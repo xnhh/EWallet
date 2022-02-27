@@ -1,5 +1,5 @@
 import { Avatar, Button,  ListItemText,  Typography } from "@material-ui/core";
-import { makeStyles } from "@mui/material"
+import { makeStyles } from "@material-ui/core/styles"
 import { useEffect, useState } from "react";
 import { useGlobal } from "../../Contexts/GlobalProvider"
 import { ethers } from "ethers";
@@ -38,7 +38,7 @@ const useStyles = makeStyles(theme => ({
 
 function DetailBody () {
   const classes = useStyles();
-  const { network, wallet } = useGlobal();
+  const { network, wallet, provider } = useGlobal();
   const { address } = wallet;
   const [balance, setBalance] = useState(0);
   const [ethPrice, setEthPrice] = useState(0);
@@ -64,10 +64,13 @@ function DetailBody () {
   }, [network]);
 
   useEffect(() => {
-    setBalance(0);
-    let provider = ethers.getDefaultProvider(network);
     let stale = false;
-    provider.on(address, _balance => {
+    provider.getBalance(address).then((_balance) => {
+      if (!stale) {
+        setBalance(convertToEth(_balance));
+      }
+    })
+    provider.on(address, (_balance) => {
       if (!stale) {
         setBalance(convertToEth(_balance));
       }
@@ -77,7 +80,7 @@ function DetailBody () {
       stale = true;
       provider.removeAllListeners(address);
     }
-  }, [network, address]);
+  }, [network, address, provider]);
 
   return (
     <div className={classes.container}>

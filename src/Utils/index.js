@@ -1,18 +1,14 @@
-import crypto from 'crypto-browserify'
-import { utils } from 'ethers';
+import crypto from 'crypto-es'
+import { ethers, utils } from 'ethers';
+
+const PROJECT_ID = 'd0d11770a8ad40f8b27c83175036482f';
 
 export function aesEncrypt (data, key) {
-  let cipher = crypto.createCipher('aes192', key);
-  let crypted = cipher.update(data, 'utf8', 'hex');
-  crypted += cipher.final('hex');
-  return crypted;
+  return crypto.AES.encrypt(data, key);
 }
 
 export function aesDecrypt(encrypted, key) {
-  let decipher = crypto.createDecipher('aes192', key);
-  let decrypted = decipher.update(encrypted, 'hex', 'utf8');
-  decrypted += decipher.final('utf8');
-  return decrypted;
+  return crypto.AES.decrypt(encrypted, key).toString(crypto.enc.Utf8);
 }
 
 export function shortenAddress(address, digits = 4) {
@@ -26,4 +22,8 @@ export function convertToEth (_bigNumber) {
 
 export function safeAccess (object, path) {
   return object ? path.reduce((currentObject, currentValue) => (currentObject && currentObject[currentValue] ? currentObject[currentValue] : null), object) : null;
+}
+
+export function getInfuraProviderByNetwork (network) {
+  return new ethers.providers.InfuraProvider(network, PROJECT_ID);
 }

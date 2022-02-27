@@ -1,4 +1,4 @@
-import { makeStyles, withStyles, createMuiTheme } from "@material-ui/core/styles";
+import { makeStyles, withStyles, createTheme } from "@material-ui/core/styles";
 import IconButton from "@material-ui/core/IconButton";
 import DownIcon from '@material-ui/icons/KeyboardArrowDown';
 import CircleIcon from '@material-ui/icons/FiberManualRecord';
@@ -12,6 +12,7 @@ import Menu from '@material-ui/core/Menu';
 import { NET_WORKS, NET_WORKS_NAME } from "../../Constants"
 import { isMobile } from 'react-device-detect';
 import { useUpdateGlobal } from '../../Contexts/GlobalProvider';
+import { getInfuraProviderByNetwork } from "../../Utils";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -69,7 +70,7 @@ const colorType = {
   'localhost':'inherit',
 }
 
-const custom_theme = createMuiTheme({
+const custom_theme = createTheme({
   palette: {
       primary:{
           main:green[500]
@@ -112,7 +113,8 @@ function MenuBtn () {
     setSelectedIndex(key);
     setOpen(false);
     updateNetwork({
-     network: NET_WORKS[key]
+      network: NET_WORKS[key],
+      provider: getInfuraProviderByNetwork(NET_WORKS[key])
     });
    }
 
