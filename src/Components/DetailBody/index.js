@@ -5,6 +5,7 @@ import { useGlobal } from "../../Contexts/GlobalProvider"
 import { ethers } from "ethers";
 import { convertToEth } from "../../Utils";
 import etherIcon from '../../Assets/ether.jpeg'
+import { useBalance } from "../../Contexts/BalancesProvider";
 
 const MAINNET = 'homestead';
 const INTERVAL = 60000;
@@ -38,9 +39,9 @@ const useStyles = makeStyles(theme => ({
 
 function DetailBody () {
   const classes = useStyles();
-  const { network, wallet, provider } = useGlobal();
+  const { network, wallet } = useGlobal();
   const { address } = wallet;
-  const [balance, setBalance] = useState(0);
+  const balance = useBalance(address, network);
   const [ethPrice, setEthPrice] = useState(0);
 
   useEffect(() => {
@@ -63,25 +64,6 @@ function DetailBody () {
     }
   }, [network]);
 
-  useEffect(() => {
-    let stale = false;
-    provider.getBalance(address).then((_balance) => {
-      if (!stale) {
-        setBalance(convertToEth(_balance));
-      }
-    })
-    provider.on(address, (_balance) => {
-      if (!stale) {
-        setBalance(convertToEth(_balance));
-      }
-    });
-
-    return () => {
-      stale = true;
-      provider.removeAllListeners(address);
-    }
-  }, [network, address, provider]);
-
   return (
     <div className={classes.container}>
       <Avatar alt="Ether logo" src={etherIcon} className={classes.avatar} />
@@ -89,12 +71,12 @@ function DetailBody () {
         className={classes.balanceText}
         primary={
           <Typography variant="h6" align="center" color="textPrimary" >
-            {`${balance.toFixed(4)} ETH`}
+            {`${convertToEth(balance).toFixed(4)} ETH`}
           </Typography>
         }
         secondary={
           <Typography variant="body1" align="center" color="textSecondary" >
-            {network === MAINNET ? `${(balance * ethPrice).toFixed(2)} USD` : <span>&nbsp;</span>}
+            {network === MAINNET ? `${(convertToEth(balance) * ethPrice).toFixed(2)} USD` : <span>&nbsp;</span>}
           </Typography>
         }
       />

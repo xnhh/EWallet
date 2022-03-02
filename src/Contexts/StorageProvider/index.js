@@ -99,3 +99,13 @@ export function useUpdateCrypt () {
     updateByAddress(address, _data);
   }, [updateByAddress, data]);
 }
+
+// export function useBalance (address, network) {
+//   const [data,] = useStorageContext();
+//   return safeAccess(data, [address, network, 'balance']);
+// }
+
+// export function useUpdateBalance () {
+//   const [data, { updateByAddress }] = useStorageContext();
+//   return useCallback((address, network, balance))
+// }
