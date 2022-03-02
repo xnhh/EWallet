@@ -15,3 +15,17 @@ export const NET_WORKS = [
   'kovan',
   'localhost'
 ]
+
+export const CHAINID_TO_NETWORK = {
+  1:'homestead',
+  3:"ropsten",
+  4:"rinkeby",
+  42:'kovan'
+}
+
+export const ETHERSCAN_PREFIXES = {
+  1: '',
+  3: 'ropsten.',
+  4: 'rinkeby.',
+  42: 'kovan.'
+}

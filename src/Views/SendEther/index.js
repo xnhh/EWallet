@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { withRouter } from "react-router";
-import SendEtherForm from "../../Components/SendEtherForm";
+import SendEtherForm from "../SendEtherForm";
+import TransactionInfo from "../TransactionInfo";
 
 const BEGIN = 'begin';
 const PENDING = 'pending';
@@ -31,9 +32,11 @@ function SendEther ({ history }) {
   if (status === BEGIN) {
     return (
       <SendEtherForm cancelCallback={reverseBack} sendCallback={sendOver} />
-    )
+    );
   } else if (status === PENDING) {
-
+    return (
+      <TransactionInfo tx={tx} reverseCallback={reverseBack} />
+    );
   } else {
     return null;
   }

@@ -6,6 +6,7 @@ import { ethers } from "ethers";
 import { convertToEth } from "../../Utils";
 import etherIcon from '../../Assets/ether.jpeg'
 import { useBalance } from "../../Contexts/BalancesProvider";
+import { withRouter } from 'react-router';
 
 const MAINNET = 'homestead';
 const INTERVAL = 60000;
@@ -37,7 +38,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function DetailBody () {
+function DetailBody ({history}) {
   const classes = useStyles();
   const { network, wallet } = useGlobal();
   const { address } = wallet;
@@ -64,6 +65,11 @@ function DetailBody () {
     }
   }, [network]);
 
+  const onSend = e => {
+    e.preventDefault();
+    history.push('/send');
+  }
+
   return (
     <div className={classes.container}>
       <Avatar alt="Ether logo" src={etherIcon} className={classes.avatar} />
@@ -80,11 +86,11 @@ function DetailBody () {
           </Typography>
         }
       />
-      <Button className={classes.sendBtn} variant="contained" color='primary'>
+      <Button className={classes.sendBtn} variant="contained" color='primary' onClick={onSend}>
         发送
       </Button>
     </div>
   );
 }
 
-export default DetailBody;
+export default withRouter(DetailBody);

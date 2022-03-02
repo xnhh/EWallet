@@ -4,7 +4,7 @@ import { blue } from "@material-ui/core/colors";
 import { useBalance } from "../../Contexts/BalancesProvider";
 import { convertToEth, isAddress, getNetworkName, shortenAddress } from "../../Utils";
 import { InputAdornment } from "@material-ui/core";
-import { useSimpleSnackbar } from "../SimpleSnackbar";
+import { useSimpleSnackbar } from "../../Components/SimpleSnackbar";
 import { useGlobal } from "../../Contexts/GlobalProvider";
 import { utils } from "ethers";
 import { CircularProgress } from "@material-ui/core";
@@ -50,11 +50,11 @@ function SendEtherForm ({ cancelCallback, sendCallback }) {
   const { address } = wallet;
   const classes = useStyles();
   const SYMBOL = "ETH";
-  const balance = useBalance();
+  const balance = useBalance(address, network);
   const [values, setValues] = useState(values_init);
   const showSnackbar = useSimpleSnackbar();
   const [open, setOpen] = useState(false);
-  const [circleOpen, setCircleOpen] = useState(true);
+  const [circleOpen, setCircleOpen] = useState(false);
   
   const { recipient, amount, gasPrice } = values;
 
@@ -110,8 +110,8 @@ function SendEtherForm ({ cancelCallback, sendCallback }) {
       to: _address,
       value: utils.parseEther("" + eth_amount),
       gasLimit: GAS_LIMIT,
-      gasPrice: utils.parseUnits("" + gas_price, 'gwei'),
-      chainId: utils.getNetwork(network).chainId
+      gasPrice: utils.parseUnits("" + gas_price, 'gwei')
+      // chainId: utils.getNetwork(network).chainId
     }
     const tx_wallet = wallet.connect(provider);
     tx_wallet.sendTransaction(transaction).then(tx => {
@@ -207,7 +207,7 @@ function SendEtherForm ({ cancelCallback, sendCallback }) {
         fullWidth
         maxWidth='xs'
         open={open}
-        onClose={setOpen(false)}
+        onClose={handleClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >

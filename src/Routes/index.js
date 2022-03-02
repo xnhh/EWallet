@@ -3,6 +3,7 @@ import { useGlobal } from '../Contexts/GlobalProvider';
 import { useStorage } from '../Contexts/StorageProvider';
 import { Route, Switch, Redirect } from "react-router-dom"
 import { withRouter } from 'react-router';
+import SendEther from '../Views/SendEther';
 
 const ImportWallet = lazy(() => import('../Views/ImportWallet'));
 const CreateWallet = lazy(() => import('../Views/CreateWallet'));
@@ -37,6 +38,9 @@ function AdminRoutes ({ history }) {
         </Route>
         <Route path='/detail'>
           {hasAccount ? (isLogin ? <WalletDetail /> : <SwitchRoute history={history} path='/sign' />) : <SwitchRoute history={history} path='/create' />}
+        </Route>
+        <Route path='/send'>
+          {hasAccount ? (isLogin ? <SendEther /> : <SwitchRoute history={history} path='/sign' />) : <SwitchRoute history={history} path='/create' />}
         </Route>
         <Redirect from='/' to='detail' />
       </Switch>

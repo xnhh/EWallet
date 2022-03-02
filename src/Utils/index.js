@@ -1,6 +1,6 @@
 import crypto from 'crypto-es'
 import { ethers, utils } from 'ethers';
-import { NET_WORKS_NAME, NET_WORKS } from '../Constants'
+import { NET_WORKS_NAME, NET_WORKS, CHAINID_TO_NETWORK, ETHERSCAN_PREFIXES } from '../Constants'
 
 const PROJECT_ID = 'd0d11770a8ad40f8b27c83175036482f';
 
@@ -46,4 +46,26 @@ export function isAddress (_address) {
 export function getNetworkName (network) {
   const index = NET_WORKS.indexOf(network);
   return NET_WORKS_NAME[index];
+}
+
+export function getNetwordByChainId (chainId) {
+  return CHAINID_TO_NETWORK[chainId];
+}
+
+export function getEtherscanLink(network, data, type){
+  const prefix = `https://${ETHERSCAN_PREFIXES[network] || ETHERSCAN_PREFIXES[1]}etherscan.io`
+
+  switch (type) {
+    case 'transaction': {
+      return `${prefix}/tx/${data}`
+    }
+    case 'token':{
+      return `${prefix}/token/${data}`
+    }
+    case 'address':
+    default: {
+      return `${prefix}/address/${data}`
+    }
+  }
+
 }
