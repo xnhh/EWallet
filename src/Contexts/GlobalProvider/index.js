@@ -13,7 +13,8 @@ const global_init = {
   network: "homestead",
   isLogin: false,
   wallet: null,
-  provider: getInfuraProviderByNetwork("mainnet")
+  provider: getInfuraProviderByNetwork("mainnet"),
+  password: null
 }
 
 function reducer(state, { type, payload }) {

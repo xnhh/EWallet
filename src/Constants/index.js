@@ -23,6 +23,13 @@ export const CHAINID_TO_NETWORK = {
   42:'kovan'
 }
 
+export const NETWORK_TO_CHAINID = {
+  'homestead': 1,
+  'ropsten': 3,
+  'rinkeby': 4,
+  'kovan': 42
+}
+
 export const ETHERSCAN_PREFIXES = {
   1: '',
   3: 'ropsten.',

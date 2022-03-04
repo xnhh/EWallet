@@ -1,6 +1,6 @@
 import crypto from 'crypto-es'
 import { ethers, utils } from 'ethers';
-import { NET_WORKS_NAME, NET_WORKS, CHAINID_TO_NETWORK, ETHERSCAN_PREFIXES } from '../Constants'
+import { NET_WORKS_NAME, NET_WORKS, CHAINID_TO_NETWORK, ETHERSCAN_PREFIXES, NETWORK_TO_CHAINID } from '../Constants'
 
 const PROJECT_ID = 'd0d11770a8ad40f8b27c83175036482f';
 
@@ -52,6 +52,10 @@ export function getNetwordByChainId (chainId) {
   return CHAINID_TO_NETWORK[chainId];
 }
 
+export function getChainIdByNetwork (network) {
+  return +NETWORK_TO_CHAINID[network];
+}
+
 export function getEtherscanLink(network, data, type){
   const prefix = `https://${ETHERSCAN_PREFIXES[network] || ETHERSCAN_PREFIXES[1]}etherscan.io`
 
@@ -67,5 +71,13 @@ export function getEtherscanLink(network, data, type){
       return `${prefix}/address/${data}`
     }
   }
+}
 
+export function nodeToString (node) {
+  let tmpNode = document.createElement("div");
+  tmpNode.appendChild(node.cloneNode(true));
+  let str = tmpNode.innerHTML;
+  tmpNode = node = null;
+  console.log(str);
+  return str;
 }

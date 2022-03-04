@@ -61,7 +61,8 @@ function SignIn ({ history }) {
       let wallet = new ethers.Wallet(privateKey);
       let options = {
         isLogin: true,
-        wallet
+        wallet,
+        password
       };
       updateGlobal(options);
       history.push('/detail');
